@@ -16,7 +16,7 @@ export default function Home() {
         </div>
         <div className="flex-1 space-y-3 py-3 px-5">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">Task List</h1>
+            <h1 className="text-2xl font-semibold">Task List:</h1>
             <Selected item={filter || []} />
           </div>
           <ListTable />
