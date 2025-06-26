@@ -8,14 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetTasksQuery } from "@/redux/api/taskApi";
+import { useDeleteTaskMutation, useGetTasksQuery } from "@/redux/api/taskApi";
+import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 
 export function ListTable() {
+  const navigate = useRouter();
   const { data: taskData, isLoading } = useGetTasksQuery();
+  const [deleteTask, { isLoading: isDeleting }] = useDeleteTaskMutation();
 
   if (isLoading) return <div>Loading...</div>;
-
+  console.log(isDeleting);
   return (
     <div className="border rounded-lg">
       <Table>
@@ -32,11 +36,23 @@ export function ListTable() {
             <TableRow key={invoice.id}>
               <TableCell className="font-medium">{invoice.title}</TableCell>
               <TableCell>{invoice.status}</TableCell>
-              <TableCell>{invoice.due_date}</TableCell>
+              <TableCell>
+                {invoice
+                  ? format(new Date(invoice.due_date), "dd/MM/yyyy")
+                  : ""}
+              </TableCell>
               <TableCell className="text-center space-x-3 w-[200px]">
-                <Button>View</Button>
+                <Button onClick={() => navigate.push(`/tasks/${invoice.id}`)}>
+                  View
+                </Button>
                 <Button>Edit</Button>
-                <Button>Delete</Button>
+                <Button
+                  onClick={() => {
+                    deleteTask(invoice.id);
+                  }}
+                >
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
           ))}

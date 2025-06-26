@@ -1,3 +1,4 @@
+import Navbar from "@/components/shared/Navbar";
 import { Providers } from "@/redux/provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -28,7 +29,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="flex flex-col h-screen">
+            <Navbar />
+            <div className="flex flex-1">
+              <div className="min-w-[200px] max-w-[200px] py-3 px-5 border-r border-gray-300">
+                Dashboard
+              </div>
+              <div className="flex-1 space-y-3 py-3 px-5">{children}</div>
+            </div>
+          </div>
+        </Providers>
       </body>
     </html>
   );
