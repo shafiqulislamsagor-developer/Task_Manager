@@ -3,6 +3,7 @@ import { Providers } from "@/redux/provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
               <div className="flex-1 space-y-3 py-3 px-5">{children}</div>
             </div>
           </div>
+          <Toaster />
         </Providers>
       </body>
     </html>

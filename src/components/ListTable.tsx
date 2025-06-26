@@ -12,6 +12,7 @@ import { useDeleteTaskMutation, useGetTasksQuery } from "@/redux/api/taskApi";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function ListTable() {
   const navigate = useRouter();
@@ -25,7 +26,7 @@ export function ListTable() {
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
-            <TableHead className="">Title</TableHead>
+            <TableHead className="w-[200px]">Title</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="">Due date </TableHead>
             <TableHead className="text-center w-[200px]">Action</TableHead>
@@ -34,7 +35,19 @@ export function ListTable() {
         <TableBody>
           {taskData?.map((invoice) => (
             <TableRow key={invoice.id}>
-              <TableCell className="font-medium">{invoice.title}</TableCell>
+              <TableCell className="font-medium">
+                {" "}
+                <div className="max-w-[300px] w-[300px] pr-6">
+                  <Tooltip>
+                    <TooltipTrigger className="text-black" asChild>
+                      <p className="inline-block truncate">{invoice.title}</p>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{invoice.title}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+              </TableCell>
               <TableCell>{invoice.status}</TableCell>
               <TableCell>
                 {invoice
@@ -45,7 +58,11 @@ export function ListTable() {
                 <Button onClick={() => navigate.push(`/tasks/${invoice.id}`)}>
                   View
                 </Button>
-                <Button>Edit</Button>
+                <Button
+                  onClick={() => navigate.push(`/tasks/${invoice.id}/edit`)}
+                >
+                  Edit
+                </Button>
                 <Button
                   onClick={() => {
                     deleteTask(invoice.id);

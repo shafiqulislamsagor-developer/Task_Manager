@@ -3,7 +3,7 @@
 import { useGetTaskQuery } from "@/redux/api/taskApi";
 import { format } from "date-fns";
 import { useParams, useRouter } from "next/navigation";
-import { Button } from "./ui/button";
+import BackButton from "./shared/BackButton";
 
 export default function ViewList() {
   const navigate = useRouter();
@@ -23,7 +23,7 @@ export default function ViewList() {
   console.log(navigate);
   return (
     <>
-      <Button onClick={() => navigate.back()}>Back</Button>
+      <BackButton />
       <div className="p-4 max-w-[500px] shadow-lg rounded-lg">
         <h1 className="text-2xl font-bold">{data?.title}</h1>
         <p>Due: {formattedDate}</p>
