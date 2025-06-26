@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -83,23 +83,21 @@ export default function FromCreate({ defaultValues, taskId }: TaskFormProps) {
           });
 
         if (!hasChanged) {
-          toast.info("No changes made.");
+          toast.info("No changes made.", { icon: "👀" });
           return;
         }
 
-        console.log(payload);
         await updateTask({ id: taskId!, body: payload }).unwrap();
         refetch();
-        console.log("Updating task:", { id: taskId, body: payload });
 
-        toast.success("Task updated successfully!");
+        toast.success("Task updated successfully!", { icon: "🚀" });
       } else {
         await createTask(payload).unwrap();
-        toast.success("Task created successfully!");
+        toast.success("Task created successfully!", { icon: "🚀" });
         form.reset();
       }
     } catch (err) {
-      toast.error("Something went wrong!");
+      toast.error("Something went wrong!", { icon: "🚨" });
     }
   };
 
@@ -204,13 +202,17 @@ export default function FromCreate({ defaultValues, taskId }: TaskFormProps) {
               disabled={creating || updating}
               className="w-full"
             >
-              {creating || updating
-                ? isEdit
-                  ? "Updating..."
-                  : "Creating..."
-                : isEdit
-                ? "Update Task"
-                : "Create Task"}
+              {creating || updating ? (
+                isEdit ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  <Loader className="animate-spin" />
+                )
+              ) : isEdit ? (
+                "Update Task"
+              ) : (
+                "Create Task"
+              )}
             </Button>
           </form>
         </Form>

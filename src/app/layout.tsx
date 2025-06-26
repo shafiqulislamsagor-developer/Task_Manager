@@ -1,9 +1,9 @@
 import Navbar from "@/components/shared/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "@/redux/provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +35,9 @@ export default function RootLayout({
             <Navbar />
             <div className="flex flex-1">
               <div className="min-w-[200px] max-w-[200px] py-3 px-5 border-r border-gray-300">
-                Dashboard
+                <span className="bg-indigo-600 w-full block text-white py-1 px-2 rounded-sm">
+                  Dashboard
+                </span>
               </div>
               <div className="flex-1 space-y-3 py-3 px-5">{children}</div>
             </div>
