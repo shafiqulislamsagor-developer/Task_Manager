@@ -96,6 +96,7 @@ export default function FromCreate({ defaultValues, taskId }: TaskFormProps) {
         toast.success("Task created successfully!", { icon: "🚀" });
         form.reset();
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       toast.error("Something went wrong!", { icon: "🚨" });
     }
